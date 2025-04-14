@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { MdDone, MdEdit, MdClose } from "react-icons/md";
 
@@ -54,7 +54,7 @@ const ActionButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${props => props.color || '#cbd5e1'};
+  color: ${(props) => props.color || "#cbd5e1"};
   font-size: 18px;
   background: transparent;
   width: 32px;
@@ -63,8 +63,8 @@ const ActionButton = styled.button`
   margin-left: 4px;
   transition: all 0.2s;
   &:hover {
-    background: ${(props) => props.$hoverBg || "#f1f5f9"};
-    color: ${(props) => props.$hoverColor || props.color || "#4a5568"};
+    background: ${(props) => props.$hoverBg || "#f1f5f9"}; // $hoverBg로 변경
+    color: ${(props) => props.$hoverColor || props.color || "#4a5568"}; // $hoverColor로 변경
   }
 `;
 
@@ -93,68 +93,22 @@ const DeleteButton = styled.button`
 `;
 
 // props: todo (할 일 객체), setTodos (할 일 목록 업데이트 함수)
-function TodoItem({ todo, setTodos }) {
+function TodoItem({ todo, setTodos, onToggle }) {
   const { id, done, text } = todo;
-  const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(text);
 
-  const onToggle = () => {
-    setTodos(prev => prev.map(t => t.id === id ? { ...t, done: !t.done } : t));
-  };
-
-  const onRemove = () => {
-    setTodos(prev => prev.filter(t => t.id !== id));
-  };
-
-  const onEdit = () => {
-    setIsEditing(true);
-  };
-
-  const cancelEdit = () => {
-    setIsEditing(false);
-    setEditText(text);
-  };
-
-  const onEditChange = (e) => {
-    setEditText(e.target.value);
-  };
-
-  const onEditSubmit = (e) => {
-    e.preventDefault();
-    if (editText.trim() === "") return;
-    setTodos(prev => prev.map(t => t.id === id ? { ...t, text: editText } : t));
-    setIsEditing(false);
-  };
+  const onRemove = useCallback(() => {
+    setTodos((prev) => prev.filter((t) => t.id !== id));
+  }, [id, setTodos]);
 
   return (
     <TodoItemBlock $done={done}>
-      <CheckCircle $done={done} onClick={onToggle}>
+      <CheckCircle $done={done} onClick={() => onToggle(id)}>
         {done && <MdDone />}
       </CheckCircle>
-      {isEditing ? (
-        <form onSubmit={onEditSubmit} style={{ display: "flex", flex: 1 }}>
-          <EditInput value={editText} onChange={onEditChange} placeholder="할 일을 입력하세요" />
-          <ActionButton type="submit" color="#6366f1" hoverBg="#ede9fe" hoverColor="#4f46e5">
-            <MdDone />
-          </ActionButton>
-          <ActionButton type="button" onClick={cancelEdit} color="#f43f5e" hoverBg="#fee2e2" hoverColor="#e11d48">
-            <MdClose />
-          </ActionButton>
-        </form>
-      ) : (
-        <>
-          <Text $done={done}>{text}</Text>
-          <ActionButtons>
-            {!done && (
-              <ActionButton type="button" onClick={onEdit} color="#6366f1" $hoverBg="#ede9fe" $hoverColor="#4f46e5">
-                <MdEdit />
-              </ActionButton>
-            )}
-            {/* 휴지통 이모지 추가 */}
-            <DeleteButton onClick={onRemove}>🗑️</DeleteButton>
-          </ActionButtons>
-        </>
-      )}
+      <Text $done={done}>{text}</Text>
+      <DeleteButton onClick={onRemove}>
+        <MdClose />
+      </DeleteButton>
     </TodoItemBlock>
   );
 }

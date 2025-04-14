@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TodoTemplate from "./components/TodoTemplate";
 import { createGlobalStyle } from "styled-components";
+import "./App.css";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -31,14 +32,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// 로컬 스토리지에서 todos를 가져오고, todos가 없으면 빈 배열을 기본값으로 설정
 function App() {
   const [todos, setTodos] = useState(() => {
-    const storedTodos = localStorage.getItem("todos");
-    return storedTodos ? JSON.parse(storedTodos) : [];
+    const savedTodos = localStorage.getItem("todos");
+    return savedTodos ? JSON.parse(savedTodos) : [];
   });
+  const [testState, setTestState] = useState(0); // 임시 상태 추가
 
-  // todos가 변경될 때마다 로컬 스토리지에 todos를 저장
+  const handleTestClick = () => {
+    setTestState((prev) => prev + 1); // 테스트 버튼 클릭 시 상태 변경
+  };
+
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
@@ -46,7 +50,9 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <TodoTemplate todos={todos} setTodos={setTodos} />
+      <div>
+        <TodoTemplate todos={todos} setTodos={setTodos} />
+      </div>
     </>
   );
 }

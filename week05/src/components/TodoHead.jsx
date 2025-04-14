@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { FaCalendarAlt } from "react-icons/fa";
 
@@ -76,16 +76,16 @@ function TodoHead({ todos }) {
       </TitleArea>
       <ProgressArea>
         <TasksInfo>
-          <span className="count">{undoneTasks.length}</span>
-          <span className="label">남은 할일</span>
+          <div className="count">{undoneTasks.length}</div>
+          <div className="label">남은 할 일</div>
         </TasksInfo>
         <TasksInfo>
-          <span className="count">{completedTasks.length}</span>
-          <span className="label">완료한 일</span>
+          <div className="count">{completedTasks.length}</div>
+          <div className="label">완료한 일</div>
         </TasksInfo>
       </ProgressArea>
     </TodoHeadBlock>
   );
 }
 
-export default TodoHead;
+export default React.memo(TodoHead); // React.memo로 최적화

@@ -61,25 +61,27 @@ const AddButton = styled.button`
 
 function TodoCreate({ todos, setTodos }) {
   const [text, setText] = useState("");
-  const [nextId, setNextId] = useState(1); // nextId를 상태로 관리
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (text.trim() === "") return;
-    const newItem = { id: nextId, text: text, done: false }; // 새로운 todo 생성
-    setTodos([...todos, newItem]); // todos 상태 업데이트
-    setNextId(nextId + 1); // nextId 증가
-    setText(""); // 입력 필드 초기화
+    const newItem = { id: Date.now() + Math.random(), text, done: false };
+    setTodos((prev) => [...prev, newItem]);
+    setText("");
   };
 
-  const handleChange = (e) => {
+  const onChange = (e) => {
     setText(e.target.value);
   };
 
   return (
     <InsertFormPositioner>
       <InsertForm onSubmit={onSubmit}>
-        <Input onChange={handleChange} value={text} placeholder="할 일을 입력하세요" />
+        <Input
+          placeholder="할 일을 입력하세요"
+          value={text}
+          onChange={onChange}
+        />
         <AddButton type="submit">
           <FaPlus />
         </AddButton>
@@ -88,4 +90,4 @@ function TodoCreate({ todos, setTodos }) {
   );
 }
 
-export default React.memo(TodoCreate);
+export default React.memo(TodoCreate); // React.memo로 최적화

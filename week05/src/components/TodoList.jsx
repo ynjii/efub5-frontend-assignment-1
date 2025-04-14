@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import styled from "styled-components";
 import TodoItem from "./TodoItem";
 
@@ -36,46 +36,40 @@ const EmptyIcon = styled.div`
   margin-bottom: 16px;
   color: #cbd5e1;
 `;
+
 // 할 일 목록을 보여주는 컴포넌트
-// todos: 할 일 목록 배열
 function TodoList({ todos, setTodos, filter }) {
-  const isEmpty = todos.length === 0;
+  const filteredTodos = useMemo(() => {
+    if (filter === "active") return todos.filter((todo) => !todo.done);
+    if (filter === "completed") return todos.filter((todo) => todo.done);
+    return todos;
+  }, [todos, filter]);
 
-  const getEmptyMessage = () => {
-    if (filter === 'completed') {
-      return {
-        icon: "🎯",
-        message: "완료한 할 일이 없습니다."
-      };
-    } else if (filter === 'active') {
-      return {
-        icon: "🎉",
-        message: "모든 할 일을 완료했습니다!"
-      };
-    } else {
-      return {
-        icon: "📝",
-        message: "할 일을 추가해보세요."
-      };
-    }
-  };
-
-  const { icon, message } = getEmptyMessage();
+  const onToggle = useCallback(
+    (id) => {
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) =>
+          todo.id === id ? { ...todo, done: !todo.done } : todo
+        )
+      );
+    },
+    [setTodos]
+  );
 
   return (
     <TodoListBlock>
-      {isEmpty ? (
+      {filteredTodos.length === 0 ? (
         <EmptyMessage>
-          <EmptyIcon>{icon}</EmptyIcon>
-          <p>{message}</p>
+          <EmptyIcon>📝</EmptyIcon>
+          <p>할 일을 추가해보세요.</p>
         </EmptyMessage>
       ) : (
-        todos.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} setTodos={setTodos} />
+        filteredTodos.map((todo) => (
+          <TodoItem key={todo.id} todo={todo} setTodos={setTodos} onToggle={onToggle} />
         ))
       )}
     </TodoListBlock>
   );
 }
 
-export default TodoList;
+export default React.memo(TodoList); // React.memo로 최적화

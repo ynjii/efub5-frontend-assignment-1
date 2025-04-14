@@ -48,12 +48,6 @@ function TodoTemplate({ todos, setTodos }) {
     setFilter(newFilter);
   };
 
-  const filteredTodos = todos.filter(todo => {
-    if (filter === 'active') return !todo.done;
-    if (filter === 'completed') return todo.done;
-    return true;
-  });
-
   return (
     <TodoTemplateBlock>
       <TodoHead todos={todos} />
@@ -62,7 +56,7 @@ function TodoTemplate({ todos, setTodos }) {
         <FilterButton $active={filter === 'active'} onClick={() => handleFilterChange('active')}>진행 중</FilterButton>
         <FilterButton $active={filter === 'completed'} onClick={() => handleFilterChange('completed')}>완료됨</FilterButton>
       </FilterBar>
-      <TodoList todos={filteredTodos} setTodos={setTodos} filter={filter} />
+      <TodoList todos={todos} setTodos={setTodos} filter={filter} />
       <TodoCreate todos={todos} setTodos={setTodos} />
     </TodoTemplateBlock>
   );
