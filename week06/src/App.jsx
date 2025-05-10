@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import TodoTemplate from "./components/TodoTemplate";
+import TimeWeatherPage from "./pages/TimeWeatherPage"; 
 import { createGlobalStyle } from "styled-components";
 import "./App.css";
 
@@ -16,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
     color: #2d3748;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
   }
   button {
@@ -37,23 +39,23 @@ function App() {
     const savedTodos = localStorage.getItem("todos");
     return savedTodos ? JSON.parse(savedTodos) : [];
   });
-  const [testState, setTestState] = useState(0); // 임시 상태 추가
-
-  const handleTestClick = () => {
-    setTestState((prev) => prev + 1); // 테스트 버튼 클릭 시 상태 변경
-  };
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   return (
-    <>
+    <Router>
       <GlobalStyle />
-      <div>
-        <TodoTemplate todos={todos} setTodos={setTodos} />
-      </div>
-    </>
+      <nav style={{ marginBottom: "20px" }}>
+        <Link to="/" style={{ margin: "0 10px", textDecoration: "none", color: "#fff" }}>Todo List</Link>
+        <Link to="/time-weather" style={{ margin: "0 10px", textDecoration: "none", color: "#fff" }}>현재 시각 & 운세</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<TodoTemplate todos={todos} setTodos={setTodos} />} />
+        <Route path="/time-weather" element={<TimeWeatherPage />} />
+      </Routes>
+    </Router>
   );
 }
 
