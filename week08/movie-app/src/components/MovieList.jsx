@@ -8,7 +8,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   padding: 2rem 0;
-  background: #111;
+  background: ${({ theme }) => theme.bg};
   min-height: 100vh;
 `;
 
@@ -23,7 +23,7 @@ function MovieList({ sort }) {
   return (
     <Container>
       {movies.length === 0 ? (
-        <p style={{ color: '#fff', fontSize: '1.2rem' }}>영화 데이터를 불러오는 중</p>
+        <p style={{ color: 'inherit', fontSize: '1.2rem' }}>영화 데이터를 불러오는 중</p>
       ) : (
         movies.map(movie => (
           <MovieCard key={movie.id} movie={movie} />

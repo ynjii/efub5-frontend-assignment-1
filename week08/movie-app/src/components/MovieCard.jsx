@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 const Card = styled.div`
   width: 220px;
   margin: 1.5rem 1rem;
-  background: #181818;
+  background: ${({ theme }) => theme.cardBg};
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  transition: transform 0.2s;
+  transition: transform 0.2s, background 0.3s;
   &:hover {
     transform: translateY(-8px) scale(1.03);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -24,7 +24,7 @@ const Poster = styled.img`
 
 const Info = styled.div`
   padding: 1rem;
-  color: #fff;
+  color: ${({ theme }) => theme.cardText};
   text-align: center;
 `;
 

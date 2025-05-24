@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const PageBg = styled.div`
   min-height: 100vh;
-  background: #111;
+  background: ${({ theme }) => theme.bg};
   padding-bottom: 3rem;
 `;
 
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: #181818;
+  background: ${({ theme }) => theme.cardBg};
   border-radius: 32px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.35);
   padding: 3rem 2.5rem;
@@ -42,7 +42,7 @@ const Poster = styled.img`
 
 const Info = styled.div`
   max-width: 600px;
-  color: #fff;
+  color: ${({ theme }) => theme.cardText};
 `;
 
 const Title = styled.h2`
@@ -54,7 +54,7 @@ const Title = styled.h2`
 const Desc = styled.p`
   font-size: 1.15rem;
   line-height: 1.7;
-  color: #e0e0e0;
+  color: ${({ theme }) => theme.text};
 `;
 
 const Tag = styled.span`
@@ -79,7 +79,7 @@ function Detail() {
   if (!movie) return (
     <PageBg>
       <Wrapper>
-        <div style={{ color: '#fff' }}>영화 정보를 불러오는 중...</div>
+        <div style={{ color: 'inherit' }}>영화 정보를 불러오는 중...</div>
       </Wrapper>
     </PageBg>
   );

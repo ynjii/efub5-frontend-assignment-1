@@ -105,7 +105,7 @@ function Home() {
         <Nav>
           <a href="/">홈</a>
           <ThemeToggleBtn onClick={() => dispatch(toggleTheme())}>
-            {mode === 'dark' ? '🌞 라이트 모드' : '🌙 다크 모드'}
+            {mode === 'dark' ? '라이트 모드' : '다크 모드'}
           </ThemeToggleBtn>
         </Nav>
       </Header>
