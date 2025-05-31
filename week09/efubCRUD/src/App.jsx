@@ -9,6 +9,8 @@ export default function App() {
   const [tab, setTab] = useState("board");
   const [selectedBoard, setSelectedBoard] = useState(null);
 
+  console.log("App member:", member);
+
   if (!member) return <AuthPage onAuth={setMember} />;
 
   return (

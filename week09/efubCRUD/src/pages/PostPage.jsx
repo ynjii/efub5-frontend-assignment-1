@@ -1,9 +1,12 @@
 import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
+import { Container } from "../styles/CommonStyled";
 
 export default function PostPage({ member, board }) {
+  console.log("PostPage member:", member);
+
   return (
-    <div style={{ maxWidth: 700, margin: "0 auto" }}>
+    <Container>
       <h2>게시글</h2>
       {!board && <div style={{ color: "#888" }}>먼저 게시판을 조회/선택하세요.</div>}
       {board && (
@@ -12,6 +15,6 @@ export default function PostPage({ member, board }) {
           <PostList member={member} board={board} />
         </>
       )}
-    </div>
+    </Container>
   );
 }

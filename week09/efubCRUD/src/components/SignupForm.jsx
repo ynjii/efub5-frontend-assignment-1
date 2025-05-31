@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axiosInstance from "../libs/axiosInstance";
+import { Container } from "../styles/CommonStyled";
 
 export default function SignUpForm({ onSignUp }) {
   const [formData, setFormData] = useState({
@@ -32,10 +33,7 @@ export default function SignUpForm({ onSignUp }) {
   };
 
   return (
-    <main
-      className="container"
-      style={{ maxWidth: "500px", marginTop: "4rem" }}
-    >
+    <Container>
       <h2>회원가입</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -99,6 +97,6 @@ export default function SignUpForm({ onSignUp }) {
       {message && (
         <p style={{ marginTop: "1rem", fontWeight: "bold" }}>{message}</p>
       )}
-    </main>
+    </Container>
   );
 }

@@ -29,7 +29,7 @@ export default function PostForm({ member, board, onCreated }) {
         writerId: member.memberId,
         boardId: board.boardId ?? board.id,
       });
-      setForm({ title: "", content: "", anonymous: false });
+      setForm({ title: "", content: ""});
       if (onCreated) onCreated();
     } catch (err) {
       alert("게시글 작성 실패: " + (err.response?.data?.message || err.message));
@@ -52,15 +52,6 @@ export default function PostForm({ member, board, onCreated }) {
         onChange={handleChange}
         required
       />
-      <label>
-        <input
-          type="checkbox"
-          name="anonymous"
-          checked={form.anonymous}
-          onChange={handleChange}
-        />
-        익명
-      </label>
       <button type="submit">작성</button>
     </form>
   );
