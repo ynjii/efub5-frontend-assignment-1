@@ -4,26 +4,31 @@ import styled from 'styled-components'
 import MusicCollectionPage from './pages/MusicCollectionPage'
 import MusicDetailPage from './pages/MusicDetailPage'
 
+const spotifyGreen = '#1db954'
+const darkBg = '#191414'
+
 const Nav = styled.nav`
-  background: #2563eb;
+  background: ${darkBg};
   padding: 1.1rem 0;
-  box-shadow: 0 2px 8px 0 rgba(16, 185, 129, 0.07);
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12);
+  border-bottom: 1.5px solid #232323;
 `
 const NavItem = styled(NavLink)`
   color: #fff;
   margin: 0 1.5rem;
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: 1.18rem;
+  font-weight: 700;
   letter-spacing: -0.5px;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  transition: background 0.18s, color 0.18s;
   &.active { 
-    font-weight: bold; 
-    text-decoration: underline; 
-    text-underline-offset: 6px;
-    color: #10b981;
+    color: ${spotifyGreen};
+    background: #232323;
   }
-  transition: color 0.2s;
   &:hover {
-    color: #a7f3d0;
+    color: ${spotifyGreen};
+    background: #232323;
   }
 `
 
@@ -31,7 +36,7 @@ export default function App() {
   return (
     <>
       <Nav>
-        <NavItem to="/favorites" end>🎵 뮤직 컬렉션</NavItem>
+        <NavItem to="/favorites" end>🎵 My Music Collection</NavItem>
       </Nav>
       <Routes>
         <Route path="/" element={<Navigate to="/favorites" replace />} />

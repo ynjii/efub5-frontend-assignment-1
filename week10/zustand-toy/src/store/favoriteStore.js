@@ -16,6 +16,9 @@ export const useFavoriteStore = create(
                 title: item.title,
                 artist: item.artist,
                 url: item.url,
+                cover: item.cover || '', // 앨범 커버
+                genre: item.genre || '',
+                year: item.year || '',
                 note: item.note || '',
               })
             })
